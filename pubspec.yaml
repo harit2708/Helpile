@@ -1,0 +1,32 @@
+name: helpile
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.5.0-226.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_native_splash: ^2.4.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/helpile.png
+
+flutter_native_splash:
+  color: "#42a5f5" # Background color of the splash screen
+  image: assets/helpile.png # Path to the splash screen image
+  android: true # Enable for Android
+  ios: true # Enable for iOS
+  fullscreen: true # Optional: Make splash screen fullscreen
