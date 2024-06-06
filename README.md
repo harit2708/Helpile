@@ -1,6 +1,6 @@
 # helpile
 
-A new Flutter project.
+One-Stop Solution for all busy professionals and elderly people. This application helps you book some basic services with just one click. 
 
 ## Getting Started
 
