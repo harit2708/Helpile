@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'register_screen.dart';
-import 'splash_screen.dart';
+import '../routes/app_routes.dart';
+import '../widget/background_color.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,15 +11,38 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   double _opacity = 0.0;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    // Start animation when the screen is first built
     Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
         _opacity = 1.0;
       });
     });
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Login Failed'),
+          content: const Text('Please enter correct email and password.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -31,17 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Login'),
-          ),
-          body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blue, Colors.purple],
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-              ),
-            ),
+          body: BackgroundColor(
             child: Center(
               child: AnimatedOpacity(
                 duration: const Duration(milliseconds: 500),
@@ -51,31 +64,64 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const TextField(
-                        decoration: InputDecoration(labelText: 'Email'),
+                      const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 20),
-                      const TextField(
-                        decoration: InputDecoration(labelText: 'Password'),
+                      TextField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(fontSize: 25.0, color: Colors.black),
+                        ),
+                        style: const TextStyle(fontSize: 25.0, color: Colors.black),
+                      ),
+                      const SizedBox(height: 20),
+                      TextField(
+                        controller: _passwordController,
+                        decoration: const InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(fontSize: 25.0, color: Colors.black),
+                        ),
+                        style: const TextStyle(fontSize: 25.0, color: Colors.black),
                         obscureText: true,
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
                           // Perform login
+                          String email = _emailController.text.trim();
+                          String password = _passwordController.text.trim();
+
+                          // Dummy check for demonstration
+                          if (email == 'abc@gmail.com' && password == 'admin') {
+                            // Navigate to the next screen on successful login
+                            // For demo purpose, navigating to the AskScreen
+                            Navigator.pushNamed(context, Routes.home_screen);
+                          } else {
+                            // Show error dialog for incorrect login
+                            _showErrorDialog();
+                          }
                         },
-                        child: const Text('Login'),
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(fontSize: 22.0, color: Colors.black),
+                        ),
                       ),
                       const SizedBox(height: 10),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const RegisterScreen()),
-                          );
+                          Navigator.pushNamed(context, Routes.register); // Navigate to RegisterScreen using named route
                         },
-                        child: const Text('Create an account'),
+                        child: const Text(
+                          'Register Here!!',
+                          style: TextStyle(fontSize: 22.0, color: Colors.black),
+                        ),
                       ),
                     ],
                   ),

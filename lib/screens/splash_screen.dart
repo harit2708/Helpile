@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:helpile/screens/ask_screen.dart';
+import '../routes/app_routes.dart';
+import '../widget/background_color.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -35,10 +36,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 4));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const AskScreen()),
-    );
+    Navigator.pushReplacementNamed(context, Routes.ask);
   }
 
   @override
@@ -51,14 +49,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.purple],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-            ),
-          ),
+        body: BackgroundColor(
           child: Center(
             child: FadeTransition(
               opacity: _animation,
